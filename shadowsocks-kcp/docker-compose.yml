@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  shadowsocks-kcp:
+    image: endoffight/shadowsocks-kcp
+    container_name: ss-server
+    ports:
+      - "8081:37210/tcp"
+      - "8081:37210/udp"
+      - "3271:38240/udp"
+    environment:
+      - PASSWORD=laogao
+      - METHOD=aes-256-cfb
+      - KCP_PASS=phpgao.com
+      - KCP_ENCRYPT=aes-192
+    restart: always
