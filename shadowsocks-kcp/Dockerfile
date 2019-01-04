@@ -28,12 +28,12 @@ RUN set -ex && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     cd /tmp && \
     v=`curl -I -s https://github.com/xtaci/kcptun/releases/latest | grep Location | sed -n 's/.*\/v\(.*\)/\1/p' | tr -d '\r'` && \
-    curl -sSL https://github.com/xtaci/kcptun/releases/download/v${v}/kcptun-linux-amd64-${v}.tar.gz | tar xz server_linux_amd64 && \
+    curl -sSL https://github.com/xtaci/kcptun/releases/download/v$v/kcptun-linux-amd64-$v.tar.gz | tar xz server_linux_amd64 && \
     mv server_linux_amd64 /usr/bin/ && \
     mkdir ss && \
     cd ss && \
     v=`curl -I -s https://github.com/shadowsocks/shadowsocks-libev/releases/latest | grep Location | sed -n 's/.*\/v\(.*\)/\1/p' | tr -d '\r'` && \
-    curl -sSL https://github.com/shadowsocks/shadowsocks-libev/releases/download/v{$v}/shadowsocks-libev-${v}.tar.gz | tar xz --strip 1 && \
+    curl -sSL https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$v/shadowsocks-libev-$v.tar.gz | tar xz --strip 1 && \
     ./configure --prefix=/usr --disable-documentation && \
     make install && \
     cd /tmp && \
