@@ -10,7 +10,7 @@ services:
       - "3271:38240/udp"
     environment:
       - PASSWORD=laogao
-      - METHOD=aes-256-cfb
-      - KCP_PASS=phpgao.com
+      - METHOD=chacha20-ietf-poly1305
+      - KCP_PASS=blog.phpgao.com
       - KCP_ENCRYPT=aes-192
     restart: always

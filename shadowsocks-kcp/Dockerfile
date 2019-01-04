@@ -1,10 +1,5 @@
-FROM alpine:3.7
-MAINTAINER Gao <noreply@phpgao.com>
-
-ARG SS_VER=3.2.3
-ARG SS_URL=https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$SS_VER/shadowsocks-libev-$SS_VER.tar.gz
-ARG KCP_VER=20181228
-ARG KCP_URL=https://github.com/xtaci/kcptun/releases/download/v$KCP_VER/kcptun-linux-amd64-$KCP_VER.tar.gz
+FROM alpine:3.8
+MAINTAINER LaoGao <noreply@phpgao.com>
 
 RUN set -ex && \
     apk add --no-cache --virtual .build-deps \
@@ -32,11 +27,13 @@ RUN set -ex && \
                                 g++ && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     cd /tmp && \
-    curl -sSL $KCP_URL | tar xz server_linux_amd64 && \
+    v=`curl -I -s https://github.com/xtaci/kcptun/releases/latest | grep Location | sed -n 's/.*\/v\(.*\)/\1/p' | tr -d '\r'` && \
+    curl -sSL https://github.com/xtaci/kcptun/releases/download/v${v}/kcptun-linux-amd64-${v}.tar.gz | tar xz server_linux_amd64 && \
     mv server_linux_amd64 /usr/bin/ && \
     mkdir ss && \
     cd ss && \
-    curl -sSL $SS_URL | tar xz --strip 1 && \
+    v=`curl -I -s https://github.com/shadowsocks/shadowsocks-libev/releases/latest | grep Location | sed -n 's/.*\/v\(.*\)/\1/p' | tr -d '\r'` && \
+    curl -sSL https://github.com/shadowsocks/shadowsocks-libev/releases/download/v{$v}/shadowsocks-libev-${v}.tar.gz | tar xz --strip 1 && \
     ./configure --prefix=/usr --disable-documentation && \
     make install && \
     cd /tmp && \
