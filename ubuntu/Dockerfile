@@ -1,6 +1,6 @@
 FROM ubuntu:zesty
 
-MAINTAINER LG <endoffight@gmail.com>
+LABEL maintainer="g@phpgao.com"
 
 #RUN sed -i "s/archive\.ubuntu\.com/mirrors\.163\.com/g" /etc/apt/sources.list
 #RUN sed -i "s/archive\.ubuntu\.com/mirrors\.aliyun\.com/g" /etc/apt/sources.list

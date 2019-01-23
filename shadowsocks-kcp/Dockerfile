@@ -1,5 +1,6 @@
 FROM alpine:3.8
-MAINTAINER LaoGao <noreply@phpgao.com>
+
+LABEL maintainer="g@phpgao.com"
 
 RUN set -ex && \
     apk add --no-cache --virtual .build-deps \

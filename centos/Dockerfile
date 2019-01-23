@@ -1,6 +1,6 @@
 FROM centos:7
 
-MAINTAINER LG <endoffight@gmail.com>
+LABEL maintainer="g@phpgao.com"
 
 # repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup && \

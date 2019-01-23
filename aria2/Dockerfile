@@ -1,18 +1,28 @@
 FROM alpine:3.8
 
-MAINTAINER g@phpgao.com
+LABEL maintainer="g@phpgao.com"
 
 RUN apk update && \
-        apk add aria2 && \
-        rm -r /var/cache/ &&\
-        mkdir /etc/aria2 /mnt/media &&\
-        touch /etc/aria2/aria2.session
+        apk add aria2 nginx && \
+        apk add --no-cache --virtual .build-deps  curl jq && \
+        mkdir -p /etc/aria2 /mnt/media && \
+        v=`curl --silent "https://api.github.com/repos/mayswind/AriaNg/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'` && \
+        mkdir /var/lib/html && \
+        curl -sSL https://github.com/mayswind/AriaNg/releases/download/$v/AriaNg-$v.zip -o /aria2.zip && \
+        unzip -q /aria2.zip -d /var/lib/html  && \
+        rm /aria2.zip && \
+        apk del .build-deps && \
+        rm -rf /tmp/* && \
+        rm -r /var/cache/
 
+COPY done.sh done.sh
 COPY aria2.conf /etc/aria2/aria2.conf
+COPY nginx.conf /etc/nginx/
+ADD conf.d /etc/nginx/conf.d
 
 VOLUME /mnt/media
 
-EXPOSE 6800
-
-CMD set -xe && \
-        /usr/bin/aria2c --conf-path=/etc/aria2/aria2.conf
+EXPOSE 80 443 6800
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+#CMD ["sh","-c","/usr/bin/aria2c --conf-path=/etc/aria2/aria2.conf -D && /usr/sbin/nginx"]
+ENTRYPOINT ["sh", "/docker-entrypoint.sh"]

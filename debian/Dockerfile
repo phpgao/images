@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-MAINTAINER LG <endoffight@gmail.com>
+LABEL maintainer="g@phpgao.com"
 
 # mirror
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
