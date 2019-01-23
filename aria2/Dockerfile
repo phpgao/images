@@ -6,7 +6,7 @@ RUN apk update && \
         apk add aria2 nginx && \
         apk add --no-cache --virtual .build-deps  curl jq && \
         mkdir -p /etc/aria2 /mnt/media && \
-        v=`curl --silent "https://api.github.com/repos/mayswind/AriaNg/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'` && \
+        v=`curl --silent "https://api.github.com/repos/mayswind/AriaNg/releases/latest" | jq -r .tag_name` && \
         mkdir /var/lib/html && \
         curl -sSL https://github.com/mayswind/AriaNg/releases/download/$v/AriaNg-$v.zip -o /aria2.zip && \
         unzip -q /aria2.zip -d /var/lib/html  && \
