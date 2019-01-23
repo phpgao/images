@@ -1,16 +1,18 @@
 version: '3'
 
+build:
+  context: aria
+
 services:
   aria2:
-    image: aria2:test
-    deploy:
-      replicas: 1
+    image: aria2
     ports:
       - "8080:80"
       - "6800:6800"
     volumes:
       - "/srv/dev-disk-by-id-usb-SanDisk_Cruzer_Blade_4C530010030422115161-0-0-part1:/mnt/media/"
-
+    networks:
+      - aria-net
 
 networks:
-     - aria-net
+  aria-net:
