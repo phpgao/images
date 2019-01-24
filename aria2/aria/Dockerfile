@@ -12,6 +12,7 @@ RUN apk update && \
         unzip -q /aria2.zip -d /var/lib/html  && \
         rm /aria2.zip && \
         apk del .build-deps && \
+        rm -rf /etc/nginx/conf.d/default.conf && \
         rm -rf /tmp/* && \
         rm -r /var/cache/
 
@@ -22,7 +23,7 @@ ADD conf.d /etc/nginx/conf.d
 
 VOLUME /mnt/media
 
-EXPOSE 80 443 6800
+EXPOSE 80 6800
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 #CMD ["sh","-c","/usr/bin/aria2c --conf-path=/etc/aria2/aria2.conf -D && /usr/sbin/nginx"]
 ENTRYPOINT ["sh", "/docker-entrypoint.sh"]
