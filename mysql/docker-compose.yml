@@ -1,0 +1,34 @@
+version: "3"
+
+volumes:
+  db:
+    driver: local
+
+services:
+  db:
+    image: mysql:8
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./var/lib/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: yourpassword
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_pw
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - docknet
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - docknet
+
+networks:
+  docknet:
