@@ -1,8 +1,11 @@
-version: '3'
+version: '2.4'
 
 services:
   shadowsocks-kcp:
-    image: endoffight/shadowsocks-kcp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: endoffight/shadowsocks-kcp:latest
     container_name: ss
     ports:
       - "8081:37210/tcp"
@@ -14,3 +17,14 @@ services:
       - KCP_PASS=blog.phpgao.com
       - KCP_ENCRYPT=aes-192
     restart: always
+    mem_limit: 100M
+    logging:
+      options:
+        max-size: '1m'
+        max-file: '1'
+      driver: json-file
+    networks:
+      - shadowsocks
+
+networks:
+  shadowsocks:
