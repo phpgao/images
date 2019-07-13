@@ -1,0 +1,6 @@
+git.yourdomain.com {
+    proxy / http://gogs:3000
+    tls endoffight@gmail.com
+    log / stdout {combined}
+    errors stderr
+}

@@ -1,38 +1,82 @@
-version: '3'
+version: '2.4'
+
+x-default:
+  &defaults
+  restart: always
+  env_file:
+      - ".env"
+  logging:
+      options:
+        max-size: '1m'
+        max-file: '1'
+      driver: json-file
+
+
 services:
-  gogsdb:
+  caddy:
+    <<: *defaults
+    container_name: caddy
+    image: abiosoft/caddy
+    volumes:
+      - "./Caddyfile:/etc/Caddyfile"
+      - "./caddy:/root/.caddy"
+    environment:
+      - ACME_AGREE=true
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - web
+
+  my_db:
+    <<: *defaults
     image: yobasystems/alpine-mariadb:amd64
     command: "--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
-    env_file:
-      - ".env"
-    restart: unless-stopped
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
-      - 33060:3306
+      - 3306:3306
     volumes:
-      - db-data:/var/lib/mysql
+      - ./my-data:/var/lib/mysql
+    networks:
+      db:
+        aliases:
+          - my_db
 
-  gogsapp:
-    image: gogs/gogs
-    env_file:
-      - ".env"
-    restart: unless-stopped
-    ports:
-      - "${GOGS_SSH_PORT}:22"
-      - "${GOGS_HOST_PORT}:3000"
+  pg_db:
+    <<: *defaults
+    image: postgres:11.4-alpine
     environment:
-      - RUN_CROND=true
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
     volumes:
-      - gogs-data:/data
-    depends_on:
-      - gogsdb
+      - ./pg-data:/var/lib/postgresql/data
+    networks:
+      db:
+        aliases:
+          - pg_db
 
-volumes:
-  gogs-data:
-    driver: local
-  db-data:
-    driver: local
+  gogs:
+    <<: *defaults
+    container_name: gogs
+    image: gogs/gogs
+    volumes:
+      - ./gogs:/data
+    ports:
+      - "3000"
+      - "22:22"
+    networks:
+      web:
+        aliases:
+          - gogs
+      db:
+
+networks:
+  web:
+  db:
