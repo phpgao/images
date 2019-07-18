@@ -1,6 +1,7 @@
 FROM alpine:3.9
 
-LABEL maintainer="g@phpgao.com"
+LABEL maintainer "laogao <endoffight@gmail.com>"
+LABEL keyword "shadowsocks kcptun"
 
 RUN set -ex && \
     apk add --no-cache --virtual .build-deps \
