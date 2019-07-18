@@ -23,6 +23,6 @@ RUN set -ex && \
         python3 setup.py install && \
         cd / && \
         rm -rf /usr/src/scrapy \
-        apk del --purge .build-deps
+        apk del .build-deps
 
 RUN ["ash"]
