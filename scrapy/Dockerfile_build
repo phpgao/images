@@ -5,7 +5,7 @@ LABEL keyword "alpine python scrapy"
 
 
 RUN set -ex && \
-        sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+        # sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
         apk add --no-cache --virtual .fetch-deps \
             git \
             && \
@@ -17,7 +17,8 @@ RUN set -ex && \
             openssl-dev \
             libxslt-dev && \
         apk del .fetch-deps && \
-        pip3 install -r /usr/src/scrapy/requirements-py3.txt -i https://pypi.doubanio.com/simple/ && \
+        # pip3 install -r /usr/src/scrapy/requirements-py3.txt -i https://pypi.doubanio.com/simple/ && \
+        pip3 install -r /usr/src/scrapy/requirements-py3.txt && \
         cd /usr/src/scrapy && \
         python3 setup.py install && \
         cd / && \
