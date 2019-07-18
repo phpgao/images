@@ -1,0 +1,27 @@
+FROM python:3.7.4-alpine3.10
+
+LABEL maintainer "laogao <endoffight@gmail.com>"
+LABEL keyword "alpine python scrapy"
+
+
+RUN set -ex && \
+        sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+        apk add --no-cache --virtual .fetch-deps \
+            git \
+            && \
+        git clone https://github.com/scrapy/scrapy.git /usr/src/scrapy && \
+        apk add --no-cache --virtual .build-deps  \
+            build-base \
+            libffi-dev \
+            libxml2-dev \
+            openssl-dev \
+            libxslt-dev && \
+        apk del .fetch-deps && \
+        pip3 install -r /usr/src/scrapy/requirements-py3.txt -i https://pypi.doubanio.com/simple/ && \
+        cd /usr/src/scrapy && \
+        python3 setup.py install && \
+        cd / && \
+        rm -rf /usr/src/scrapy \
+        apk del --purge .build-deps
+
+RUN ["ash"]
