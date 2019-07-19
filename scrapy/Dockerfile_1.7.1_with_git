@@ -1,0 +1,22 @@
+FROM alpine:3.10
+
+LABEL maintainer "laogao <endoffight@gmail.com>"
+LABEL keyword "alpine python scrapy git"
+
+ENV VERSION=1.7.1
+
+RUN set -ex && \
+        apk add --no-cache python3 \
+            git \
+            py3-twisted \
+            py3-cffi \
+            py3-cryptography \
+            py3-lxml && \
+        git clone -b $VERSION https://github.com/scrapy/scrapy.git /usr/src/scrapy && \
+        pip3 install -r /usr/src/scrapy/requirements-py3.txt && \
+        cd /usr/src/scrapy && \
+        python3 setup.py install && \
+        cd / && \
+        rm -rf /usr/src/scrapy
+
+RUN ["ash"]
