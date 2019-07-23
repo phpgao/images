@@ -3,7 +3,7 @@ FROM alpine:3.10 as build
 LABEL maintainer="g@phpgao.com"
 
 RUN set -ex && \
-        sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+        # sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
         apk add  \
             build-base \
             git \
@@ -24,7 +24,7 @@ RUN set -ex && \
             libssh2-dev \
             pkgconf-dev
 
-RUN  git clone https://gitee.com/phpgao/aria2.git /usr/src/aria2
+RUN  git clone https://github.com/aria2/aria2.git /usr/src/aria2
 RUN cd /usr/src/aria2 && \
         autoreconf -i && \
         #./configure ARIA2_STATIC=yes && \
@@ -35,7 +35,7 @@ FROM alpine:3.10
 COPY --from=build /usr/local/bin/aria2c /usr/bin/aria2c
 
 RUN set -ex && \
-        sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+        # sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
         apk add --no-cache\
             libstdc++ \
             gnutls \
