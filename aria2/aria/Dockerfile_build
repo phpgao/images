@@ -52,6 +52,12 @@ RUN set -ex && \
             libssh2 \
             pkgconf \
             nginx && \
+        mkdir -p /etc/aria2 /mnt/media && \
+        v=`curl --silent "https://api.github.com/repos/mayswind/AriaNg/releases/latest" | jq -r .tag_name` && \
+        mkdir /var/lib/html && \
+        curl -sSL https://github.com/mayswind/AriaNg/releases/download/$v/AriaNg-$v.zip -o /aria2.zip && \
+        unzip -q /aria2.zip -d /var/lib/html  && \
+        rm /aria2.zip && \
         rm -rf /etc/nginx/conf.d/default.conf && \
         rm -rf /tmp/* && \
         rm -r /var/cache/
