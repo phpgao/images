@@ -1,0 +1,70 @@
+FROM alpine:3.10 as build
+
+LABEL maintainer="g@phpgao.com"
+
+RUN set -ex && \
+        sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+        apk add  \
+            build-base \
+            git \
+            gnutls-dev \
+            sqlite-dev \
+            nettle-dev \
+            gmp-dev \
+            expat \
+            ca-certificates \
+            openssl-dev \
+            c-ares-dev \
+            libxml2-dev \
+            autoconf \
+            gettext-dev \
+            automake \
+            libtool \
+            zlib-dev \
+            libssh2-dev \
+            pkgconf-dev
+
+RUN  git clone https://gitee.com/phpgao/aria2.git /usr/src/aria2
+RUN cd /usr/src/aria2 && \
+        autoreconf -i && \
+        #./configure ARIA2_STATIC=yes && \
+        ./configure  && \
+        make -j"$(nproc)" && make install
+
+FROM alpine:3.10
+COPY --from=build /usr/local/bin/aria2c /usr/bin/aria2c
+
+RUN set -ex && \
+        sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+        apk add --no-cache\
+            libstdc++ \
+            gnutls \
+            sqlite-libs \
+            nettle \
+            gmp \
+            expat \
+            ca-certificates \
+            openssl \
+            c-ares \
+            libxml2 \
+            gettext \
+            zlib \
+            libssh2 \
+            pkgconf \
+            nginx && \
+        rm -rf /etc/nginx/conf.d/default.conf && \
+        rm -rf /tmp/* && \
+        rm -r /var/cache/
+
+
+COPY done.sh done.sh
+COPY aria2.conf /etc/aria2/aria2.conf
+COPY nginx.conf /etc/nginx/
+ADD conf.d /etc/nginx/conf.d
+
+VOLUME /mnt/media
+
+EXPOSE 80 6800
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+#CMD ["sh","-c","/usr/bin/aria2c --conf-path=/etc/aria2/aria2.conf -D && /usr/sbin/nginx"]
+ENTRYPOINT ["sh", "/docker-entrypoint.sh"]

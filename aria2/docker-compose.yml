@@ -9,7 +9,7 @@ services:
       - "8080:80"
       - "6800:6800"
     volumes:
-      - "/srv/dev-disk-by-id-usb-SanDisk_Cruzer_Blade_4C530010030422115161-0-0-part1:/mnt/media/"
+      - "./media:/mnt/media/"
     networks:
       - aria-net
     restart: always
