@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+
+  mysql:
+    # https://github.com/yobasystems/alpine-mariadb
+    image: yobasystems/alpine-mariadb:10.3.16
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-yourpass}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-phpgao}"
+      MYSQL_USER: "${MYSQL_USER:-laogao}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-laogaoniubi}"
+      MYSQL_CHARSET: "${MYSQL_CHARSET:-utf8mb4}"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    restart: always
+
+
+networks:
+  db-my:
