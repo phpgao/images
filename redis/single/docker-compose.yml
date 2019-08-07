@@ -1,0 +1,23 @@
+version: "2.4"
+
+
+services:
+
+  redis:
+    image: redis:5.0.5-alpine3.10
+    command: ["redis-server", "--appendonly yes", "--requirepass ${REDIS_PASSWORD}"]
+    ports:
+      - "${REDIS_IP_PORT}:6379"
+    volumes:
+      - ./data/redis:/data
+    logging:
+      options:
+        max-size: '2m'
+        max-file: '3'
+      driver: json-file
+    restart: always
+    networks:
+      - redis
+
+networks:
+  redis:
