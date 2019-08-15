@@ -3,7 +3,7 @@ FROM alpine:3.10
 LABEL maintainer "laogao <endoffight@gmail.com>"
 LABEL keyword "alpine python scrapy git"
 
-ENV VERSION=1.7.2
+ENV VERSION=1.7.3
 
 RUN set -ex && \
         apk add --no-cache python3 \
