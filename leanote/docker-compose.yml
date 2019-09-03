@@ -1,7 +1,8 @@
-version: '3'
+version: '2.4'
 
-x-defaults: &defaults
-  restart: unless-stopped
+x-default:
+  &defaults
+  restart: always
   logging:
     options:
       max-size: '1m'
@@ -9,7 +10,6 @@ x-defaults: &defaults
     driver: json-file
 
 services:
-
   leanote:
     <<: *defaults
     image: leanote:latest
