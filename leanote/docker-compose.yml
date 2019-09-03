@@ -1,0 +1,35 @@
+version: "3"
+
+x-default:
+  &defaults
+  restart: unless-stopped
+  logging:
+      options:
+        max-size: '1m'
+        max-file: '1'
+      driver: json-file
+
+services:
+  <<: *defaults
+  leanote:
+    image: leanote:latest
+    build:
+      context: ./leanote
+      dockerfile: Dockerfile
+    volumes:
+      - "./leanote/app.conf:/go/src/github.com/leanote/leanote/conf/app.conf"
+      - './data/leanote/log:/var/log'
+    ports:
+      - "8088:80"
+    depends_on:
+      - mongo
+
+  mongo:
+    <<: *defaults
+    image: mongo:4.2.0-bionic
+    volumes:
+      - "./leanote/leanote_install_data/:/init/"
+      - "./init.sh:/docker-entrypoint-initdb.d/init.sh"
+      - "./data/mongodb:/data/db"
+    ports:
+      - "127.0.0.1:27017:27017"
