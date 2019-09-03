@@ -12,11 +12,8 @@ services:
     volumes:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ./var/lib/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-yourpass}"
-      MYSQL_DATABASE: "${MYSQL_DATABASE:-phpgao}"
-      MYSQL_USER: "${MYSQL_USER:-laogao}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-laogaoniubi}"
+    env_file:
+      - db.env
     ports:
       - "3306:3306"
     restart: always
