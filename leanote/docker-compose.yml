@@ -10,8 +10,9 @@ x-default:
       driver: json-file
 
 services:
-  <<: *defaults
+
   leanote:
+    <<: *defaults
     image: leanote:latest
     build:
       context: ./leanote
