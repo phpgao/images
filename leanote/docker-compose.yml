@@ -12,10 +12,10 @@ x-default:
 services:
   leanote:
     <<: *defaults
-    image: leanote:latest
-    build:
-      context: ./leanote
-      dockerfile: Dockerfile
+    image: endoffight/leanote:latest
+    # build:
+    #   context: ./leanote
+    #   dockerfile: Dockerfile
     volumes:
       - "./leanote/app.conf:/go/src/github.com/leanote/leanote/conf/app.conf"
       - './data/log:/var/log'
