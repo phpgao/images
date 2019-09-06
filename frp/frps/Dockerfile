@@ -1,5 +1,9 @@
 FROM alpine:3.10
 
+LABEL maintainer="endoffight@gmail.com"
+
+LABEL keyword="frp frpc frps apline"
+
 RUN apk add curl jq tzdata --no-cache && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     version=`curl --silent "https://api.github.com/repos/fatedier/frp/releases/latest"|jq -r '.tag_name'` && \
