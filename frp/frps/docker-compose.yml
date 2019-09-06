@@ -1,5 +1,4 @@
-
-version: '3'
+version: '2.4'
 
 services:
   frps:
@@ -8,3 +7,9 @@ services:
     network_mode: "host"
     volumes:
       - "./frps.ini:/etc/frps/frps.ini"
+    mem_limit: 50M
+    logging:
+      options:
+        max-size: '2m'
+        max-file: '1'
+      driver: json-file
