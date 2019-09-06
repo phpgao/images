@@ -16,4 +16,4 @@ RUN set -ex && \
         python3 setup.py install && \
         rm -rf /usr/src/scrapy
 
-RUN ["ash"]
+CMD ["ash"]
