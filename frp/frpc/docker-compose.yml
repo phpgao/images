@@ -1,0 +1,10 @@
+
+version: '3'
+
+services:
+  frpc:
+    image: endoffight/frpc
+    restart: unless-stopped
+    network_mode: "host"
+    volumes:
+      - "./frpc.ini:/etc/frpc/frpc.ini"
