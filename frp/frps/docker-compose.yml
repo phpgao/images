@@ -7,4 +7,4 @@ services:
     restart: unless-stopped
     network_mode: "host"
     volumes:
-      - "./frps.ini:/etc/frpc/frps.ini"
+      - "./frps.ini:/etc/frps/frps.ini"
