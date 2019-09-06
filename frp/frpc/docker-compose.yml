@@ -3,6 +3,7 @@ version: '2.4'
 services:
   frpc:
     image: endoffight/frpc
+    container_name: frpc
     restart: unless-stopped
     network_mode: "host"
     volumes:

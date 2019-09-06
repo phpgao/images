@@ -3,6 +3,7 @@ version: '2.4'
 services:
   frps:
     image: endoffight/frps
+    container_name: frps
     restart: unless-stopped
     network_mode: "host"
     volumes:
