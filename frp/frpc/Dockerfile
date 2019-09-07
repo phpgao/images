@@ -12,6 +12,7 @@ RUN apk add curl jq tzdata --no-cache && \
     mv /tmp/frp_"$v"_linux_amd64/frpc /usr/local/bin/frpc && \
     mkdir /etc/frpc && \
     mv /tmp/frp_"$v"_linux_amd64/frpc.ini /etc/frpc/frpc.ini && \
-    apk del curl jq tzdata
+    apk del curl jq tzdata && \
+    rm -rf /tmp/frp_"$v"_linux_amd64
 
 CMD ["frpc", "-c", "/etc/frpc/frpc.ini"]
