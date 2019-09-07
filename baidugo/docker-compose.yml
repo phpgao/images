@@ -1,0 +1,22 @@
+version: '2.4'
+
+services:
+  baidupcs-web:
+    image: endoffight/baidupcs-web
+    container_name: baidupcs-web
+    restart: unless-stopped
+    volumes:
+      - "./config:/root/.config"
+    mem_limit: 100M
+    logging:
+      options:
+        max-size: '2m'
+        max-file: '1'
+      driver: json-file
+    networks: 
+      - baidupcs-web
+    ports:
+      - "5299:5299"
+
+networks: 
+  baidupcs-web:
