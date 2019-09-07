@@ -7,7 +7,10 @@ services:
     restart: unless-stopped
     volumes:
       - "./config:/root/.config"
+      - "./Downloads:/root/Downloads"
     mem_limit: 100M
+    environment:
+      BAIDUPCS_GO_VERBOSE : 1
     logging:
       options:
         max-size: '2m'
