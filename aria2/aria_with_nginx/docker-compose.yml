@@ -2,9 +2,7 @@ version: '3'
 
 services:
   aria2:
-    build:
-      context: ./aria
-    image: aria2:1.34
+    image: endoffight/aria2:with_nginx
     ports:
       - "8080:80"
       - "6800:6800"

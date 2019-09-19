@@ -2,8 +2,7 @@ FROM alpine:3.10
 
 LABEL maintainer="g@phpgao.com"
 
-RUN apk update && \
-        apk add --no-cache aria2
+RUN apk add --no-cache aria2
 
 COPY done.sh done.sh
 COPY aria2.conf /etc/aria2/aria2.conf

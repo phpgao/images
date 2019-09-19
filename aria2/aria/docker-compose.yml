@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  aria2:
+    image: endoffight/aria2:alpine
+    ports:
+      - "6800:6800"
+    volumes:
+      - "./media:/mnt/media/"
+    networks:
+      - aria-net
+    restart: always
+
+networks:
+  aria-net:
