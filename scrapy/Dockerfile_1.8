@@ -6,6 +6,7 @@ LABEL keyword "alpine python scrapy quick 1.8.0"
 ENV VERSION=1.8.0
 
 RUN set -ex && \
+        echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
         apk add --no-cache --virtual .fetch-deps \
             git \
             && \
@@ -14,7 +15,7 @@ RUN set -ex && \
         apk add --no-cache --virtual .build-deps \
             py3-twisted \
             py3-cffi \
-            py3-cryptography \
+            py3-cryptography@edge \
             py3-lxml && \
         apk del .fetch-deps && \
         pip3 install -r /usr/src/scrapy/requirements-py3.txt && \

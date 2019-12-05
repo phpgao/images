@@ -6,11 +6,12 @@ LABEL keyword "alpine python scrapy git 1.8.0"
 ENV VERSION=1.8.0
 
 RUN set -ex && \
+        echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
         apk add --no-cache python3 \
             git \
             py3-twisted \
             py3-cffi \
-            py3-cryptography \
+            py3-cryptography@edge \
             py3-lxml && \
         git clone -b $VERSION https://github.com/scrapy/scrapy.git /usr/src/scrapy && \
         pip3 install -r /usr/src/scrapy/requirements-py3.txt && \
