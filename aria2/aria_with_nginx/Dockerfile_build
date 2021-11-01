@@ -1,4 +1,4 @@
-FROM alpine:3.10 as build
+FROM alpine:3 as build
 
 LABEL maintainer="g@phpgao.com"
 
@@ -31,7 +31,7 @@ RUN cd /usr/src/aria2 && \
         ./configure  && \
         make -j"$(nproc)" && make install
 
-FROM alpine:3.10
+FROM alpine:3
 COPY --from=build /usr/local/bin/aria2c /usr/bin/aria2c
 
 RUN set -ex && \
