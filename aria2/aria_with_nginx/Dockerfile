@@ -16,10 +16,13 @@ RUN apk update && \
         rm -rf /tmp/* && \
         rm -r /var/cache/
 
-COPY done.sh done.sh
+COPY done.sh /done.sh
+COPY delete.sh /delete.sh
 COPY aria2.conf /etc/aria2/aria2.conf
 COPY nginx.conf /etc/nginx/
 ADD conf.d /etc/nginx/conf.d
+
+RUN chmod a+x /done.sh /delete.sh
 
 VOLUME /mnt/media
 
