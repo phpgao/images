@@ -5,7 +5,7 @@
 # $3 is the path of the first file.
  
 DOWNLOAD=/mnt/media/download # no trailing slash!
-COMPLETE=/mnt/media/download/delete # no trailing slash!
+COMPLETE=/mnt/media/delete # no trailing slash!
 LOG=/mnt/media/download/completed.log
 SRC=$3
 

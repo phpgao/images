@@ -5,8 +5,8 @@
 # $3 is the path of the first file.
  
 DOWNLOAD=/mnt/media/download # no trailing slash!
-COMPLETE=/mnt/media/download/complete # no trailing slash!
-LOG=/mnt/media/download/completed.log
+COMPLETE=/mnt/media/complete # no trailing slash!
+LOG=/mnt/media/completed.log
 SRC=$3
 
 if [ -d "$COMPLETE" ]; then
